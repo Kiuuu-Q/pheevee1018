@@ -1,0 +1,10 @@
+{
+  "name": "pheevee1018",
+  "version": "1.0.0",
+  "private": true,
+  "description": "Pheevee 生日花园 · 静态站点 + 祝福墙/相册接口（零依赖）",
+  "main": "server.js",
+  "scripts": {
+    "start": "node server.js"
+  }
+}
