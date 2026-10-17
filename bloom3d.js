@@ -37,12 +37,12 @@
       var n = r[0], rBase = r[1], len = r[2], wid = r[3], tilt = r[4], off = r[5], shade = r[6];
       for (var i = 0; i < n; i++) {
         var ang = i * 360 / n + off + (((i * 37) % 9) - 4) * 1.1;
-        var j = ((i * 53) % 5 - 2) * 0.035;
+        var j = ((i * 53) % 5 - 2) * 0.02;
         petals.push({
           ang: ang, tilt: tilt, rBase: rBase,
           len: len * (1 + j), wid: wid * (1 + j * 0.6),
           shade: shade, delay: (i % 3) * 0.05 + ri * 0.055,
-          cup: 0.10 + ri * 0.03, curl: 0.05,
+          cup: 0.16 + ri * 0.035, curl: 0.075,
           skew: (((i * 29) % 7) - 3) * 0.006
         });
       }
@@ -54,13 +54,13 @@
   }
 
   var BASE = {
-    x: 0, y: 0, z: 0, pitch: 0.26, yaw: 0, scale: 1,
+    x: 0, y: 0, z: 0, pitch: 0.30, yaw: 0, scale: 1,
     hue: 347, sat: 0.46,
     rings: [
-      [9, .13, .48, .52, 0.04, 0, 0.93],
-      [8, .075, .40, .46, 0.22, 24, 1.00],
-      [7, .035, .30, .40, 0.40, 48, 1.05],
-      [5, .012, .19, .30, 0.56, 12, 1.10]
+      [10, .13, .47, .46, -0.16, 0, 0.91],
+      [9, .075, .40, .43, -0.02, 24, 0.99],
+      [7, .035, .30, .36, 0.26, 48, 1.05],
+      [5, .012, .20, .26, 0.52, 12, 1.10]
     ],
     core: .13
   };
@@ -68,29 +68,25 @@
   var FLOWERS = [
     { def: makeFlower(BASE), delay: 0 },
     { def: makeFlower(Object.assign({}, BASE, {
-      x: -.52, y: .20, z: .10, yaw: -0.40, scale: .36, hue: 352, core: .07,
-      rings: [[6, .14, .50, .50, 0.06, 0, 0.94], [5, .06, .38, .40, 0.34, 30, 1.02]]
+      x: -.50, y: .22, z: .10, yaw: -0.40, scale: .30, hue: 352, core: 0,
+      rings: [[6, .14, .50, .50, 0.02, 0, 0.94], [5, .06, .38, .40, 0.30, 30, 1.02]]
     })), delay: .24 },
     { def: makeFlower(Object.assign({}, BASE, {
-      x: .54, y: .15, z: .14, yaw: 0.36, scale: .32, hue: 18, sat: 0.38, core: .07,
-      rings: [[6, .14, .50, .50, 0.06, 0, 0.94], [5, .06, .38, .40, 0.34, 30, 1.02]]
-    })), delay: .32 },
-    { def: makeFlower(Object.assign({}, BASE, {
-      x: -.44, y: -.24, z: .08, yaw: -0.6, scale: .24, hue: 276, sat: 0.26, core: .06,
+      x: -.44, y: -.24, z: .08, yaw: -0.6, scale: .24, hue: 276, sat: 0.26, core: 0,
       rings: [[5, .14, .54, .52, 0.10, 0, 0.95]]
     })), delay: .40 },
     { def: makeFlower(Object.assign({}, BASE, {
-      x: .42, y: -.30, z: .12, yaw: 0.55, scale: .21, hue: 352, core: .06,
+      x: .42, y: -.30, z: .12, yaw: 0.55, scale: .21, hue: 352, core: 0,
       rings: [[5, .14, .54, .52, 0.10, 0, 0.95]]
     })), delay: .46 }
   ];
 
   var LEAVES = [
-    { x: -.44, y: .30, z: .16, ang: -152, len: .34, wid: .20, rot: -0.55 },
-    { x: .44, y: .31, z: .18, ang: -28, len: .33, wid: .19, rot: 0.55 },
-    { x: -.10, y: .36, z: .22, ang: -96, len: .30, wid: .18, rot: 0 },
-    { x: .30, y: .12, z: .12, ang: -32, len: .26, wid: .15, rot: 0.7 },
-    { x: -.30, y: .08, z: .12, ang: -148, len: .26, wid: .15, rot: -0.7 }
+    { x: -.40, y: .30, z: .16, ang: -160, len: .44, wid: .16, rot: -0.62 },
+    { x: .42, y: .31, z: .18, ang: -22, len: .42, wid: .15, rot: 0.62 },
+    { x: -.04, y: .37, z: .24, ang: -94, len: .36, wid: .13, rot: 0 },
+    { x: .31, y: .13, z: .12, ang: -34, len: .32, wid: .11, rot: 0.75 },
+    { x: -.31, y: .09, z: .12, ang: -146, len: .32, wid: .11, rot: -0.75 }
   ];
 
   function hsl(h, s, l) {
@@ -98,8 +94,8 @@
   }
   function petalFill(d, p, t, lam) {
     var h = d.hue + (p.shade - 1) * 4;
-    var s = d.sat * 100 * (0.72 + 0.28 * (1 - t));
-    var l = (68 + 22 * t) * (0.92 + 0.14 * lam) * p.shade;
+    var s = d.sat * 100 * (0.78 + 0.22 * (1 - t));
+    var l = (64 + 26 * t) * (0.93 + 0.13 * lam) * p.shade;
     return hsl(h, s, l);
   }
 
@@ -205,7 +201,7 @@
         if (it.kind === 'leaf') {
           var pr = it.pts.map(proj);
           var gl = ctx.createLinearGradient(pr[0][0], pr[0][1], pr[pr.length >> 1][0], pr[pr.length >> 1][1]);
-          gl.addColorStop(0, '#6d7d52'); gl.addColorStop(.55, '#8b9c6b'); gl.addColorStop(1, '#a7b787');
+          gl.addColorStop(0, '#5c6c44'); gl.addColorStop(.5, '#7c8e5c'); gl.addColorStop(1, '#9dad7e');
           ctx.globalAlpha = 0.25 + 0.75 * it.local;
           ctx.beginPath(); ctx.moveTo(pr[0][0], pr[0][1]);
           for (var i = 1; i < pr.length; i++) ctx.lineTo(pr[i][0], pr[i][1]);
@@ -213,6 +209,10 @@
           ctx.shadowColor = 'rgba(40,55,25,0.28)'; ctx.shadowBlur = 8 * it.local; ctx.shadowOffsetY = 4 * it.local;
           ctx.fillStyle = gl; ctx.fill();
           ctx.shadowColor = 'transparent'; ctx.shadowBlur = 0; ctx.shadowOffsetY = 0;
+          // 叶脉
+          var tipP = pr[15] || pr[pr.length >> 1];
+          ctx.beginPath(); ctx.moveTo(pr[0][0], pr[0][1]); ctx.lineTo(tipP[0], tipP[1]);
+          ctx.strokeStyle = 'rgba(66,86,48,0.32)'; ctx.lineWidth = 1; ctx.stroke();
           ctx.globalAlpha = 1;
           return;
         }
@@ -245,7 +245,7 @@
         ctx.beginPath(); ctx.moveTo(pr2[0][0], pr2[0][1]);
         for (var k = 1; k < pr2.length; k++) ctx.lineTo(pr2[k][0], pr2[k][1]);
         ctx.closePath();
-        ctx.shadowColor = 'rgba(126,58,80,0.24)'; ctx.shadowBlur = 9 * lo; ctx.shadowOffsetY = 5 * lo;
+        ctx.shadowColor = 'rgba(122,56,78,0.16)'; ctx.shadowBlur = 13 * lo; ctx.shadowOffsetY = 6 * lo;
         ctx.fillStyle = gp; ctx.fill();
         ctx.shadowColor = 'transparent'; ctx.shadowBlur = 0; ctx.shadowOffsetY = 0;
         // 花瓣柔和高光（受光面）
@@ -257,8 +257,8 @@
         gh.addColorStop(0.65, 'rgba(255,255,255,0.04)');
         gh.addColorStop(1, 'rgba(255,255,255,0)');
         ctx.save(); ctx.clip(); ctx.fillStyle = gh; ctx.fill(); ctx.restore();
-        ctx.strokeStyle = 'rgba(168,86,112,' + (0.16 + 0.16 * lo).toFixed(3) + ')';
-        ctx.lineWidth = 0.9; ctx.stroke();
+        ctx.strokeStyle = 'rgba(166,84,110,' + (0.10 + 0.07 * lo).toFixed(3) + ')';
+        ctx.lineWidth = 0.7; ctx.stroke();
         ctx.globalAlpha = 1;
       });
     }
